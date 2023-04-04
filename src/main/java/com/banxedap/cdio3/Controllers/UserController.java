@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @AllArgsConstructor
 public class UserController {
     private UserService userService;
@@ -39,7 +40,7 @@ public class UserController {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = userService.getUserByUserName(loginRequest.getUserName());
-        UserDTO userDTO = new UserDTO(loginRequest.getUserName(), jwtUtils.generateJwtToken(user),user.getRole());
+        UserDTO userDTO = new UserDTO(user.getFullName(), jwtUtils.generateJwtToken(user),user.getRole());
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
     @GetMapping("api/users")

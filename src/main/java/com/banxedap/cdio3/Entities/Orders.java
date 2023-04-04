@@ -4,15 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,6 +20,15 @@ public class Order {
     private String tradingCode;
     private boolean isPayment;
     private boolean isTransported;
-    private boolean isSuccess;
+    private int isSuccess;
 
+    public Orders(String paymentMethods, double total, int userId, String tradingCode, boolean isPayment, boolean isTransported, int isSuccess) {
+        this.paymentMethods = paymentMethods;
+        this.total = total;
+        this.userId = userId;
+        this.tradingCode = tradingCode;
+        this.isPayment = isPayment;
+        this.isTransported = isTransported;
+        this.isSuccess = isSuccess;
+    }
 }
