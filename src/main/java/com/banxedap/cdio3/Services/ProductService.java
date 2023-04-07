@@ -2,6 +2,7 @@ package com.banxedap.cdio3.Services;
 
 import com.banxedap.cdio3.AdviceHandle.NotFoundException;
 import com.banxedap.cdio3.AdviceHandle.SaveEntityFailed;
+import com.banxedap.cdio3.Entities.Carts;
 import com.banxedap.cdio3.Entities.Product;
 import com.banxedap.cdio3.Repository.ProductRepository;
 import com.banxedap.cdio3.Request.CreateProductRequest;
@@ -76,5 +77,17 @@ public class ProductService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public List<Object>  getAllManufacturers() {
+        return productRepository.getAllManufacturers();
+    }
+
+    public List<Product> searchProduct(Map<String, String> allParams) {
+        if(allParams.containsKey("manufacturer")){
+            List<Product> list = productRepository.searchProduct(allParams.get("manufacturer"));
+            return list;
+        }
+        return null;
     }
 }

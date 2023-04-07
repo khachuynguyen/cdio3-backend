@@ -18,6 +18,7 @@ public class Orders {
     private double total;
     private int userId;
     private String tradingCode;
+    private String address;
     private boolean isPayment;
     private boolean isTransported;
     private int isSuccess;

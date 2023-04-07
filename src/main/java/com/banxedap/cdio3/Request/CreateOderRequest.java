@@ -1,17 +1,17 @@
 package com.banxedap.cdio3.Request;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class LoginRequest {
+public class CreateOderRequest {
     @NotEmpty
-    private String userName;
-    @NotEmpty
-    private String password;
+    private List<Integer> listProduct;
+    private String address;
 }
