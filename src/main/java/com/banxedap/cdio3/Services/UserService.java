@@ -7,6 +7,7 @@ import com.banxedap.cdio3.DTO.UserDTO;
 import com.banxedap.cdio3.Entities.User;
 import com.banxedap.cdio3.Repository.UserRepository;
 import com.banxedap.cdio3.Request.CreateUserRequest;
+import com.banxedap.cdio3.Request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,17 @@ public class UserService {
         if(userRepository.findUsersByUserName(userName).isPresent())
             return userRepository.findUsersByUserName(userName).get();
         return null;
+    }
+
+    public User updateUser(User userFound, UpdateUserRequest userRequest) {
+        userFound.setEmail(userRequest.getEmail());
+        userFound.setAddress(userRequest.getAddress());
+        userFound.setPhone(userRequest.getPhone());
+        userFound.setFullName(userRequest.getFullName());
+        return userRepository.save(userFound);
+    }
+
+    public User getUserById(int id) {
+        return userRepository.findById(id).get();
     }
 }

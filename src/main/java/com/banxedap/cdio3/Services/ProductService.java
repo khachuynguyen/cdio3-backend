@@ -84,10 +84,16 @@ public class ProductService {
     }
 
     public List<Product> searchProduct(Map<String, String> allParams) {
+        List<Product> list=null;
         if(allParams.containsKey("manufacturer")){
-            List<Product> list = productRepository.searchProduct(allParams.get("manufacturer"));
-            return list;
+            if(!allParams.containsKey("find"))
+                list = productRepository.searchProduct(allParams.get("manufacturer"));
+            else
+                list = productRepository.searchProduct(allParams.get("manufacturer"), allParams.get("find"));
+        }else {
+            if(allParams.containsKey("find"))
+                list = productRepository.searchProductName(allParams.get("find"));
         }
-        return null;
+        return list;
     }
 }

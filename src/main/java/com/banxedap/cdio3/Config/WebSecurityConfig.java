@@ -36,11 +36,12 @@ public class WebSecurityConfig {
         httpSecurity.cors().and().csrf()
                 .disable()
                 .authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/users").hasRole("ADMIN")
+//                .requestMatchers("/api/users").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"api/products").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT,"api/products").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"api/products").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET,"api/products/**","api/manufacturers","/api/search").permitAll()
+                .requestMatchers(HttpMethod.GET,"api/products/**","api/manufacturers","/api/search", "api/user/**").permitAll()
                 .anyRequest().authenticated();
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

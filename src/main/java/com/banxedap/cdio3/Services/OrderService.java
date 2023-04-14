@@ -8,6 +8,7 @@ import com.banxedap.cdio3.Repository.OrderRepository;
 import com.banxedap.cdio3.Repository.ProductRepository;
 import com.banxedap.cdio3.Request.CreateOderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,5 +80,17 @@ public class OrderService {
 
     public List<OrderDetail> getOrderDetailOfUser(int orderId) {
         return orderDetailRepository.findAllByOrderId(orderId);
+    }
+
+    public List<Orders>  getAllOrders() {
+        return orderRepository.findAll(Sort.by("id").descending());
+    }
+
+    public Orders doAcceptDecline(int orderId, int isSuccess) {
+        Orders orders = orderRepository.findById(orderId).get();
+        if(orders == null)
+            throw  new NotFoundException("Not found product");
+        orders.setIsSuccess(isSuccess);
+        return orderRepository.save(orders);
     }
 }

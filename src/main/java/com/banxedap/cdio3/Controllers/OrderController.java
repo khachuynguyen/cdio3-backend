@@ -3,6 +3,7 @@ package com.banxedap.cdio3.Controllers;
 import com.banxedap.cdio3.Entities.OrderDetail;
 import com.banxedap.cdio3.Entities.Orders;
 import com.banxedap.cdio3.Repository.UpdatePaymentRequest;
+import com.banxedap.cdio3.Request.AcceptDeclineOrderRequest;
 import com.banxedap.cdio3.Request.CreateOderRequest;
 import com.banxedap.cdio3.Services.OrderDetailService;
 import com.banxedap.cdio3.Services.OrderService;
@@ -44,6 +45,17 @@ public class OrderController {
         Orders orders = orderService.createOrder(userOrder, listProduct);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+    @GetMapping("/api/admin/orders")
+    public ResponseEntity<Object> getAllOrders(){
+        List<Orders>  orders = orderService.getAllOrders();
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+    @PutMapping("/api/admin/orders/{id}")
+    public ResponseEntity<Object> doAcceptDeclineOrder(@PathVariable("id") int orderId,@RequestBody @Valid AcceptDeclineOrderRequest request){
+        Orders orders = orderService.doAcceptDecline(orderId, request.getIsSuccess());
+        return new ResponseEntity<>(request, HttpStatus.OK);
+    }
+
     @GetMapping("/api/orders")
     public ResponseEntity<Object> getOrderByUserId(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
